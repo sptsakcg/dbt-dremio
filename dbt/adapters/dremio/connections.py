@@ -107,7 +107,8 @@ class DremioConnectionManager(SQLConnectionManager):
             if credentials.additional_parameters:
                 con_str.append(f"{credentials.additional_parameters}")
             con_str_concat = ';'.join(con_str)
-            logger.debug(f'Using connection string: {con_str_concat}')
+            masked_pwd = "****" if credentials.PWD else "<None>"
+            logger.debug(f'Using connection string: {con_str_concat};PWD={masked_pwd}')
 
             # Two Advantages to pass PWD as keyword argument: 1) Preventing leak of password in debug
             # no need to escape the password containing special ';' , '{' and '}' characters
