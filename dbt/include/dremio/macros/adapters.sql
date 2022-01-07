@@ -56,7 +56,7 @@
                   then substring(table_schema, position('.' in table_schema) + 1)
                   else 'no_schema'
               end)
-          ,lower(name)
+          ,lower(reflection_name)
           ,lower(column_name)
           ,lower(data_type)
           ,character_maximum_length
@@ -179,16 +179,16 @@
     )
     ,r1(identifier_position, database_end_position, dataset, name, type) as (
         select
-            case when "RIGHT"(dataset, 1) = '"'
-                then length(dataset) - strpos(substr(reverse(dataset), 2), '"')
-                else length(dataset) - strpos(reverse(dataset), '.') + 2
+            case when "RIGHT"(dataset_name, 1) = '"'
+                then length(dataset_name) - strpos(substr(reverse(dataset_name), 2), '"')
+                else length(dataset_name) - strpos(reverse(dataset_name), '.') + 2
             end
-            ,case when "LEFT"(dataset, 1) = '"'
-                then strpos(substr(dataset, 2), '"') + 1
-                else strpos(dataset, '.') - 1
+            ,case when "LEFT"(dataset_name, 1) = '"'
+                then strpos(substr(dataset_name, 2), '"') + 1
+                else strpos(dataset_name, '.') - 1
             end
-            ,dataset
-            ,name
+            ,dataset_name as dataset
+            ,reflection_name
             ,type
         from sys.reflections
     )

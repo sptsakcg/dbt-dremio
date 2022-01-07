@@ -41,7 +41,7 @@
             then substring(table_schema, position('.' in table_schema) + 1)
             else 'no_schema'
         end)
-    ,lower(name)
+    ,lower(reflection_name)
     ,'materializedview'
     ,initcap(type) || ' Reflection'
     ,lower(column_name)
